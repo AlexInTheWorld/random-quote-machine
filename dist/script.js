@@ -1,0 +1,173 @@
+//Project made according to FreeCodeCamp guidelines
+var currentQuote = '',currentAuthor = '';
+const quotes = [["Life isn’t about getting and having, it’s about giving and being.", "Kevin Kruse"], ["Strive not to be a success, but rather to be of value.", "Albert Einstein"], ["The most difficult thing is the decision to act, the rest is merely tenacity.", "Amelia Earhart"], ["Life is 10% what happens to me and 90% of how I react to it.", "Charles Swindoll"], ["The most common way people give up their power is by thinking they don’t have any.", "Alice Walker"], ["The mind is everything. What you think you become.", "Buddha"], ["The best time to plant a tree was 20 years ago. The second best time is now.", "Chinese Proverb"], ["Every child is an artist. The problem is how to remain an artist once he grows up.", "Pablo Picasso"], ["I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.", "Maya Angelou"], ["The two most important days in your life are the day you are born and the day you find out why.", "Mark Twain"], ["Whatever you can do, or dream you can, begin it. Boldness has genius, power and magic in it.", "Johann Wolfgang von Goethe"], ["Life shrinks or expands in proportion to one’s courage.", "Anais Nin"], ["Certain things catch your eye, but pursue only those that capture the heart.", "Ancient Indian Proverb"], ["Believe you can and you’re halfway there.", "Theodore Roosevelt"], ["Everything you’ve ever wanted is on the other side of fear.", "George Addair"], ["Fall seven times and stand up eight.", "Japanese Proverb"], ["When one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.", "Helen Keller"], ["Everything has beauty, but not everyone can see.", "Confucius"], ["How wonderful it is that nobody need wait a single moment before starting to improve the world.", "Anne Frank"], ["When I let go of what I am, I become what I might be.", "Lao Tzu"], ["Life is not measured by the number of breaths we take, but by the moments that take our breath away.", "Maya Angelou"], ["You can’t fall if you don’t climb.  But there’s no joy in living your whole life on the ground.", "Unknown"], ["I didn’t fail the test. I just found 100 ways to do it wrong.", "Benjamin Franklin"], ["A person who never made a mistake never tried anything new.", "Albert Einstein"], ["The person who says it cannot be done should not interrupt the person who is doing it.", "Chinese Proverb"], ["Build your own dreams, or someone else will hire you to build theirs.", "Farrah Gray"], ["Education costs money. But then so does ignorance.", "Sir Claus Moser"], ["It’s not the years in your life that count. It’s the life in your years.", "Abraham Lincoln"]];
+
+function getRandomQuote() {
+  return quotes[Math.floor(Math.random() * quotes.length)];
+}
+
+function getQuote() {
+
+  let randomQuote = getRandomQuote();
+
+  currentQuote = randomQuote[0];
+  currentAuthor = randomQuote[1];
+
+  $(".quote-text").animate(
+  { opacity: 0 },
+  500,
+  function () {
+    $(this).animate({ opacity: 1 }, 500);
+    $('#text').text(currentQuote);
+  });
+
+
+  $(".quote-author").animate(
+  { opacity: 0 },
+  500,
+  function () {
+    $(this).animate({ opacity: 1 }, 500);
+    $('#author').html(currentAuthor);
+  });
+
+
+  var hue = Math.floor(Math.random() * 181);
+
+  $("html body").animate(
+  {
+    backgroundColor: jQuery.Color([hue, null, null, 1]),
+    color: jQuery.Color([hue, null, null, 1]) },
+
+  1000);
+
+
+  $("#quote-box").animate({
+    backgroundColor: jQuery.Color([hue, null, null, 1]) },
+
+  1000);
+
+
+  $("#root").animate({
+    backgroundColor: jQuery.Color([hue, null, null, 1]) },
+
+  1000);
+
+}
+
+$(document).ready(function () {
+  getQuote();
+
+  $('#new-quote').on('click', getQuote);
+
+});
+
+
+// Redux:
+const ADD = 'ADD';
+const REMOVE = 'REMOVE';
+
+const addMessage = message => {
+  return {
+    type: ADD,
+    message: message };
+
+};
+
+const removeAll = nothing => {
+  return {
+    type: REMOVE,
+    message: nothing };
+
+};
+
+const messageReducer = (state = [], action) => {
+  switch (action.type) {
+    case ADD:
+      return [...state, action.message];
+    case REMOVE:
+      return [action.message];
+    default:
+      return state;}
+
+};
+
+const store = Redux.createStore(messageReducer);
+
+// React:
+const Provider = ReactRedux.Provider;
+const connect = ReactRedux.connect;
+
+class Presentational extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: '' };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.submitMessage = this.submitMessage.bind(this);
+    this.Reset = this.Reset.bind(this);
+  }
+  handleChange(event) {
+    this.setState({
+      input: event.target.value });
+
+  }
+  submitMessage() {
+    this.props.submitNewMessage(this.state.input);
+    this.setState({
+      input: '' });
+
+  }
+  Reset() {
+    this.props.refresh('');
+  }
+
+  render() {
+    return /*#__PURE__*/(
+      React.createElement("div", null, /*#__PURE__*/
+      React.createElement("h2", null, " What's your favourite quote?"), /*#__PURE__*/
+      React.createElement("input", { type: "text", class: "form-control", placeholder: "Type in your quote here", value: this.state.input, onChange: this.handleChange }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/
+      React.createElement("button", { class: "btn btn-primary", onClick: this.submitMessage }, /*#__PURE__*/React.createElement("i", { class: "fa fa-paper-plane" }), " Submit"), /*#__PURE__*/
+      React.createElement("button", { class: "btn btn-danger", id: "refresh", onClick: this.Reset }, /*#__PURE__*/React.createElement("i", { class: "fas fa-undo" }), " Reset"), /*#__PURE__*/
+      React.createElement("ul", { class: "list-group list-group-flush" }, " ", this.props.messages.map((message, idx) => {
+        return /*#__PURE__*/(
+          React.createElement("li", { class: "list-group-item", key: idx }, message));
+
+      }))));
+
+
+
+
+  }}
+;
+
+const mapStateToProps = state => {
+  return { messages: state };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    submitNewMessage: message => {
+      dispatch(addMessage(message));
+    },
+    refresh: nothing => {
+      dispatch(removeAll(nothing));
+    } };
+
+};
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational);
+
+class AppWrapper extends React.Component {
+  render() {
+    return /*#__PURE__*/(
+      React.createElement(Provider, { store: store }, /*#__PURE__*/
+      React.createElement(Container, null)));
+
+
+  }}
+;
+
+$("#your-quote").click(function () {
+  ReactDOM.render( /*#__PURE__*/React.createElement(AppWrapper, null), document.querySelector('#root'));
+});
