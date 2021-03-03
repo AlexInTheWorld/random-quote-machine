@@ -1,10 +1,30 @@
 # FCC : Random Quote Machine
 
+
+Random quotes app built for FreeCodeCamp as a part of the "Responsive Design" module using JS, HTML, SCSS, React+Redux and jQuery
+___
+***USER STORIES***
+
+User Story #1: I can see a wrapper element with a corresponding `id="quote-box"`.
+
+User Story #2: Within `#quote-box`, I can see an element with a corresponding `id="text"`.
+
+User Story #3: Within `#quote-box`, I can see an element with a corresponding `id="author"`.
+
+User Story #4: Within `#quote-box`, I can see a clickable element with a corresponding `id="new-quote"`.
+
+User Story #5: Within `#quote-box`, I can see a clickable a element with a corresponding `id="tweet-quote"`.
+
+User Story #6: On first load, my quote machine displays a random quote in the element with `id="text"`.
+
+User Story #7: On first load, my quote machine displays the random quote's author in the element with `id="author"`.
+
+User Story #8: When the `#new-quote` button is clicked, my quote machine should fetch a new quote and display it in the `#text` element.
+
+User Story #9: My quote machine should fetch the new quote's author when the #new-quote button is clicked and display it in the `#author` element.
+
+User Story #10: I can tweet the current quote by clicking on the `#tweet-quote <a>` element. This `a` element should include the "twitter.com/intent/tweet" path in its href attribute to tweet the current quote.
+
+User Story #11: The `#quote-box` wrapper element should be horizontally centered. Please run tests with browser's zoom level at 100% and page maximized.
+___
 A Pen created on CodePen.io. Original URL: [https://codepen.io/Alex_in_the_World/pen/RwNRQvm](https://codepen.io/Alex_in_the_World/pen/RwNRQvm).
-
-Show random quotes using "Random Famous Quotes" API
-(https://www.mashape.com/andruxnet/random-famous-quotes)
-
-Forked from [Gabriel Nunes](http://codepen.io/hezag/)'s Pen [Random Quote Machine](http://codepen.io/hezag/pen/ZGxOLX/).
-
-Forked from [Free Code Camp](http://codepen.io/FreeCodeCamp/)'s Pen [Random Quote Machine](http://codepen.io/FreeCodeCamp/pen/bELoPJ/).
